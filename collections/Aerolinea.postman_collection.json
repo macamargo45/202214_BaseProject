@@ -1,0 +1,380 @@
+{
+	"info": {
+		"_postman_id": "accbaa68-5862-4b02-b83b-60308ed86d26",
+		"name": "Aerolinea",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear Aerolinea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"console.log(data)",
+							"pm.globals.set(\"idAirline\", data.id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Air Canada\",\n    \"description\": \"Air Canada airlines\",\n    \"foundationDate\": \"1997-12-17T03:24:00Z\",\n    \"webPage\": \"https://www.aircanada.com/ca/en/aco/home.html\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines"
+					]
+				},
+				"description": "Crea una Aerolinea en el sistema. Retorna la Aerolinea creado con el id asignado."
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Aerolinea invalida",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"   pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Air Canada\",\n    \"description\": \"Air Canada airlines\",\n    \"foundationDate\": \"2055-12-17T03:24:00Z\",\n    \"webPage\": \"https://www.aircanada.com/ca/en/aco/home.html\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines"
+					]
+				},
+				"description": "Crea una Aerolinea invalida en el sistema. Retorna bad request"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Aerolinea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of culturas gastronómicas > ' + 0, function () {",
+							"   var data = pm.response.json()",
+							"   pm.expect(data.length).to.greaterThan(0)",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines"
+					]
+				},
+				"description": "Retorna las Aerolineas que se encuentran en el sistema, incluyendo sus detalles."
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar Aerolinea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}"
+					]
+				},
+				"description": "Retorna la información a detalle de la Aerolinea solicitada con el id. En caso no exista la Aerolinea con el id dado, se retorna el código 404 con el mensaje correspondiente."
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar Aerolinea inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"La aerolinea con el id dado no existe\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Retorna la información a detalle de la Aerolinea solicitada con el id. En caso no exista la Aerolinea con el id dado, se retorna el código 404 con el mensaje correspondiente."
+			},
+			"response": []
+		},
+		{
+			"name": "Editar Aerolinea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Air Canada New\",\n    \"description\": \"Air Canada airlines\",\n    \"foundationDate\": \"1997-12-17T03:24:00Z\",\n    \"webPage\": \"https://www.aircanada.com/ca/en/aco/home.html\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}"
+					]
+				},
+				"description": "Edita la información básica de la Aerolinea indicada con el id. Retorna la información básica de la Aerolinea, incluyendo su id. En caso no exista la Aerolinea con el id dado, se retorna el código 404 con el mensaje correspondiente."
+			},
+			"response": []
+		},
+		{
+			"name": "Editar Aerolinea inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"La aerolinea con el id dado no existe\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Air Canada New\",\n    \"description\": \"Air Canada airlines\",\n    \"foundationDate\": \"1997-12-17T03:24:00Z\",\n    \"webPage\": \"https://www.aircanada.com/ca/en/aco/home.html\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Edita la información básica de la Aerolinea indicada con el id. Retorna la información básica de la Aerolinea, incluyendo su id. En caso no exista la Aerolinea con el id dado, se retorna el código 404 con el mensaje correspondiente."
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Aerolinea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}"
+					]
+				},
+				"description": "Elimina la Aerolinea indicada con el id y toda su información que tuviese relacionada a ella. No retorna contenido en caso de éxito. En caso no exista la Aerolinea con el id dado, se retorna el código 404 con el mensaje correspondiente."
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Aerolinea inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"La aerolinea con el id dado no existe\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Elimina la Aerolinea indicada con el id y toda su información que tuviese relacionada a ella. No retorna contenido en caso de éxito. En caso no exista la Aerolinea con el id dado, se retorna el código 404 con el mensaje correspondiente."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api/v1"
+		}
+	]
+}

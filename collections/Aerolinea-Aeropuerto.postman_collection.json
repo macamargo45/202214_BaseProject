@@ -1,0 +1,420 @@
+{
+	"info": {
+		"_postman_id": "e38ed273-bd96-477b-b7bb-eaad10816398",
+		"name": "Aerolinea-Aeropuerto",
+		"description": "Colección que administra el recurso de la relación aerolinea - aeropuerto.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": " Asociar un aeropuerto a una aerolínea.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}/airports/{{idAirport}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}",
+						"airports",
+						"{{idAirport}}"
+					]
+				},
+				"description": "collecion que se encarga de asociar un aeropuerto a una aerolinea, al asociar una arelina no existente debe regresa un error en el request."
+			},
+			"response": []
+		},
+		{
+			"name": " Asociar un aeropuerto a una aerolínea invalido.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"El aeropuerto con el id dado no existe\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}/airports/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}",
+						"airports",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "collecion que se encarga de asociar un aeropuerto a una aerolinea, al asociar una arelina no existente debe regresa un error en el request."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un aeropuerto de una aerolinea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}/airports/{{idAirport}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}",
+						"airports",
+						"{{idAirport}}"
+					]
+				},
+				"description": "collecion que se encarga de obtener la asociacion entre un aeropuerto a una aerolinea, al asociar una arelina no existente debe regresa un error en el request."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un aeropuerto de una aerolinea invalida",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"El aeropuerto con el id dado no existe\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}/airports/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}",
+						"airports",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "collecion que se encarga de obtener la asociacion entre un aeropuerto a una aerolinea, al asociar una arelina no existente debe regresa un error en el request."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener aeropuertos de una aerolinea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of airports > ' + 0, function () {",
+							"   var data = pm.response.json()",
+							"   pm.expect(data.length).to.greaterThan(0)",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}/airports",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}",
+						"airports"
+					]
+				},
+				"description": "collecion que se encarga de obtener la asociacion entre un aeropuerto a una aerolinea, al asociar una arelina no existente debe regresa un error en el request."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener aeropuertas de una aerolinea invalida",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"La aerolinea con el id dado no existe\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/00000000-0000-0000-0000-000000000000/airports",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"00000000-0000-0000-0000-000000000000",
+						"airports"
+					]
+				},
+				"description": "collecion que se encarga de obtener la asociacion entre un aeropuerto a una aerolinea, al asociar una arelina no existente debe regresa un error en el request."
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar aeropuertos de una aeroliena",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id\": \"{{idAirport}}\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}/airports",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}",
+						"airports"
+					]
+				},
+				"description": "collecion que se encarga de actualizar la asociacion entre un aeropuerto a una aerolinea, al asociar una arelina no existente debe regresa un error en el request."
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar aeropuertos de una aeroliena invalida",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"El aeropuerto con el id dado no existe\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id\": \"00000000-0000-0000-0000-000000000000\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}/airports",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}",
+						"airports"
+					]
+				},
+				"description": "collecion que se encarga de actualizar la asociacion entre un aeropuerto a una aerolinea, al asociar una arelina no existente debe regresa un error en el request."
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar aeropuerto de una aerolinea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}/airports/{{idAirport}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}",
+						"airports",
+						"{{idAirport}}"
+					]
+				},
+				"description": "collecion que se encarga de eliminar la asociacion entre un aeropuerto a una aerolinea, al asociar una arelina no existente debe regresa un error en el request."
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar aeropuerto de una aerolinea invalida",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"El aeropuerto con el id dado no existe\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{idAirline}}/airports/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{idAirline}}",
+						"airports",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "collecion que se encarga de eliminar la asociacion entre un aeropuerto a una aerolinea, al asociar una arelina no existente debe regresa un error en el request."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:3000/API/v1"
+		}
+	]
+}
